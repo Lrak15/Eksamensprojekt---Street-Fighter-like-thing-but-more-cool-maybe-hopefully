@@ -13,12 +13,13 @@ from Player import PlayerClass
 
 clock = pygame.time.Clock()
 
-fighter_one = PlayerClass(screen, 101, 102, 103, 200, 10)
-fighter_two = PlayerClass(screen, 101, 102, 103, 200, 10)
+fighter_one = PlayerClass(screen, 101, 500, 103, 200, 5)
+fighter_two = PlayerClass(screen, 101, 102, 103, 200, 5)
 
 def collisionChecker(firstGameObject, secondGameObject):
     if firstGameObject.xPos + firstGameObject.width > secondGameObject.xPos and firstGameObject.xPos < secondGameObject.xPos + secondGameObject.width and firstGameObject.yPos + firstGameObject.height > secondGameObject.yPos and firstGameObject.yPos < secondGameObject.yPos + secondGameObject.height:
         return True
+
 
 running = True
 while running:
@@ -37,9 +38,10 @@ while running:
             if event.key == pygame.K_LEFT:
                 fighter_one.moveX -= fighter_one.vel
             if event.key == pygame.K_DOWN:
-                fighter_one.moveY += fighter_one.vel
+                fighter_one.height -= fighter_one.height / 2
             if event.key == pygame.K_UP:
-                fighter_one.moveY -= fighter_one.vel
+                if fighter_one.moveY == 0:
+                    fighter_one.moveY = 20
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
@@ -47,9 +49,7 @@ while running:
             if event.key == pygame.K_LEFT:
                 fighter_one.moveX += fighter_one.vel
             if event.key == pygame.K_DOWN:
-                fighter_one.moveY -= fighter_one.vel
-            if event.key == pygame.K_UP:
-                fighter_one.moveY += fighter_one.vel
+                fighter_one.height += fighter_one.height
 
 
         if event.type == pygame.KEYDOWN:
@@ -73,11 +73,12 @@ while running:
                 fighter_two.moveY += fighter_two.vel
 
     if collisionChecker(fighter_one, fighter_two):
-        fighter_one.color = (255, 0, 0)
+        fighter_two.color = (255, 0, 0)
     else:
-        fighter_one.color = (1, 1, 1)
+        fighter_two.color = (1, 1, 1)
 
 
+    fighter_one.gravity()
     fighter_one.update()
     fighter_one.draw()
 

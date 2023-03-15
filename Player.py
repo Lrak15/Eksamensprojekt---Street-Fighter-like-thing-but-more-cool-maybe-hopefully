@@ -10,6 +10,8 @@ class PlayerClass:
     color = (1, 1, 1)
     moveX = 0
     moveY = 0
+    futureX = 0
+    futureY = 0
 
     def __init__(self, screen, x, y, width, height, vel):
         self.screen = screen
@@ -21,9 +23,16 @@ class PlayerClass:
         self.screenWidth = self.screen.get_size()[0]
         self.screenHeight = self.screen.get_size()[1]
 
+    def gravity(self):
+        if self.moveY > 0:
+            self.moveY -= 1
+        if self.yPos != self.screenHeight:
+            if self.moveY == 0:
+                self.yPos += 1
+
     def update(self):
         self.xPos = self.xPos + self.moveX
-        self.yPos = self.yPos + self.moveY
+        self.yPos = self.yPos - self.moveY
 
         if self.width + self.xPos > self.screenWidth:
             self.xPos = self.screenWidth - self.width
