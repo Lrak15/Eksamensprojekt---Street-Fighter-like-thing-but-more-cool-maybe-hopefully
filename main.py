@@ -1,5 +1,5 @@
 import pygame
-import math
+
 pygame.init()
 
 gameWindowWidth, gameWindowHeight = pygame.display.Info().current_w, pygame.display.Info().current_h
@@ -11,8 +11,14 @@ print(gameWindowWidth, gameWindowHeight)
 
 from Player import PlayerClass
 
-fighter_one = PlayerClass(screen, 101, 102, 103, 200, 1)
-fighter_two = PlayerClass(screen, 101, 102, 103, 200, 1)
+clock = pygame.time.Clock()
+
+fighter_one = PlayerClass(screen, 101, 102, 103, 200, 10)
+fighter_two = PlayerClass(screen, 101, 102, 103, 200, 10)
+
+def collisionChecker(firstGameObject, secondGameObject):
+    if firstGameObject.xPos + firstGameObject.width > secondGameObject.xPos and firstGameObject.xPos < secondGameObject.xPos + secondGameObject.width and firstGameObject.yPos + firstGameObject.height > secondGameObject.yPos and firstGameObject.yPos < secondGameObject.yPos + secondGameObject.height:
+        return True
 
 running = True
 while running:
@@ -66,6 +72,12 @@ while running:
             if event.key == pygame.K_w:
                 fighter_two.moveY += fighter_two.vel
 
+    if collisionChecker(fighter_one, fighter_two):
+        fighter_one.color = (255, 0, 0)
+    else:
+        fighter_one.color = (1, 1, 1)
+
+
     fighter_one.update()
     fighter_one.draw()
 
@@ -80,4 +92,5 @@ while running:
     pygame.draw.rect(screen, health_bar_red, pygame.Rect(40, 40, 500, 30))
     pygame.draw.rect(screen, health_bar_green, pygame.Rect(40, 40, 300, 30))
 
-    pygame.display.update()
+    pygame.display.flip()
+    clock.tick(60)
