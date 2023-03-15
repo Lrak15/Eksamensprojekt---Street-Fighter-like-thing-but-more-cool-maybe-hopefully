@@ -34,8 +34,5 @@ class PlayerClass:
         if self.yPos < 0:
             self.yPos = 0
 
-       # while self.yPos + self.height < self.screenHeight:
-        #    self.yPos += 0.001
-
     def draw(self):
         pygame.draw.rect(self.screen, self.color, pygame.Rect(self.xPos, self.yPos, self.width, self.height))

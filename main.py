@@ -71,4 +71,13 @@ while running:
 
     fighter_two.update()
     fighter_two.draw()
+
+    health_bar_background = (50, 50, 50)
+    health_bar_red = (255, 0, 0)
+    health_bar_green = (0, 255, 0)
+
+    pygame.draw.rect(screen, health_bar_background, pygame.Rect(30, 30, 520, 50))
+    pygame.draw.rect(screen, health_bar_red, pygame.Rect(40, 40, 500, 30))
+    pygame.draw.rect(screen, health_bar_green, pygame.Rect(40, 40, 300, 30))
+
     pygame.display.update()
