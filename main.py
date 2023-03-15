@@ -76,8 +76,7 @@ while running:
             if event.key == pygame.K_w:
                 fighter_two.moveY += fighter_two.vel
             if event.key == pygame.K_SPACE:
-                time.sleep(0.4)
-                fighter_two.punch_width = 00
+                fighter_two.punch_width = 0
 
 
     if collisionChecker(fighter_one, fighter_two):
@@ -90,6 +89,7 @@ while running:
     fighter_one.update()
     fighter_one.draw()
 
+    fighter_two.gravity()
     fighter_two.update()
     fighter_two.draw()
 

@@ -48,6 +48,6 @@ class PlayerClass:
 
     def draw(self):
         pygame.draw.rect(self.screen, self.color, pygame.Rect(self.xPos, self.yPos, self.width, self.height))
-        pygame.draw.rect(self.screen, self.color, pygame.Rect(self.xPos, self.yPos, self.punch_width, self.punch_height))
+        pygame.draw.rect(self.screen, self.color, pygame.Rect(self.xPos, self.yPos+125, self.punch_width, self.punch_height))
 
 
