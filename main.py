@@ -1,5 +1,7 @@
 import pygame
 
+import time
+
 pygame.init()
 
 gameWindowWidth, gameWindowHeight = pygame.display.Info().current_w, pygame.display.Info().current_h
@@ -61,6 +63,8 @@ while running:
                 fighter_two.moveY += fighter_two.vel
             if event.key == pygame.K_w:
                 fighter_two.moveY -= fighter_two.vel
+            if event.key == pygame.K_SPACE:
+                fighter_two.punch_width = 200
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_d:
@@ -71,6 +75,10 @@ while running:
                 fighter_two.moveY -= fighter_two.vel
             if event.key == pygame.K_w:
                 fighter_two.moveY += fighter_two.vel
+            if event.key == pygame.K_SPACE:
+                time.sleep(0.4)
+                fighter_two.punch_width = 00
+
 
     if collisionChecker(fighter_one, fighter_two):
         fighter_two.color = (255, 0, 0)
@@ -85,13 +93,30 @@ while running:
     fighter_two.update()
     fighter_two.draw()
 
-    health_bar_background = (50, 50, 50)
-    health_bar_red = (255, 0, 0)
-    health_bar_green = (0, 255, 0)
+# Define health bar colors
+    health_bar_background_color = (100, 100, 100)
+    health_bar_outline_color = (0, 0, 0)
+    health_bar_red_color = (255, 0, 0)
+    health_bar_green_color = (0, 255, 0)
 
-    pygame.draw.rect(screen, health_bar_background, pygame.Rect(30, 30, 520, 50))
-    pygame.draw.rect(screen, health_bar_red, pygame.Rect(40, 40, 500, 30))
-    pygame.draw.rect(screen, health_bar_green, pygame.Rect(40, 40, 300, 30))
+# Define screen spacings and lengths
+    screen_spacing_1 = int(gameWindowWidth/50)
+    screen_spacing_2 = int(gameWindowWidth/200)
+    health_bar_length = int(gameWindowWidth/3)
+
+# Draw player 1 health bar
+    pygame.draw.rect(screen, health_bar_background_color, pygame.Rect(screen_spacing_1, screen_spacing_1, health_bar_length, 9*screen_spacing_2))
+    pygame.draw.rect(screen, health_bar_outline_color, pygame.Rect(screen_spacing_1, screen_spacing_1, health_bar_length, 9*screen_spacing_2), screen_spacing_2)
+    pygame.draw.rect(screen, health_bar_red_color, pygame.Rect(screen_spacing_1 + 2*screen_spacing_2, screen_spacing_1 + 2*screen_spacing_2, health_bar_length - 4*screen_spacing_2, 5*screen_spacing_2))
+    pygame.draw.rect(screen, health_bar_outline_color, pygame.Rect(screen_spacing_1 + 2*screen_spacing_2, screen_spacing_1 + 2*screen_spacing_2, health_bar_length - 4*screen_spacing_2, 5*screen_spacing_2), screen_spacing_2)
+    pygame.draw.rect(screen, health_bar_green_color, pygame.Rect(screen_spacing_1 + 3*screen_spacing_2, screen_spacing_1 + 3*screen_spacing_2, 300, 3*screen_spacing_2))
+
+# Draw player 2 health bar
+    pygame.draw.rect(screen, health_bar_background_color, pygame.Rect(gameWindowWidth - health_bar_length - screen_spacing_1, screen_spacing_1, health_bar_length, 9*screen_spacing_2))
+    pygame.draw.rect(screen, health_bar_outline_color, pygame.Rect(gameWindowWidth - health_bar_length - screen_spacing_1, screen_spacing_1, health_bar_length, 9 * screen_spacing_2), screen_spacing_2)
+    pygame.draw.rect(screen, health_bar_red_color, pygame.Rect(gameWindowWidth - health_bar_length - screen_spacing_1 + 2*screen_spacing_2, screen_spacing_1 + 2 * screen_spacing_2, health_bar_length - 4 * screen_spacing_2, 5 * screen_spacing_2))
+    pygame.draw.rect(screen, health_bar_outline_color, pygame.Rect(gameWindowWidth - health_bar_length - screen_spacing_1 + 2 * screen_spacing_2, screen_spacing_1 + 2 * screen_spacing_2, health_bar_length - 4 * screen_spacing_2, 5 * screen_spacing_2), screen_spacing_2)
+    pygame.draw.rect(screen, health_bar_green_color, pygame.Rect(gameWindowWidth - health_bar_length - screen_spacing_1 + 3*screen_spacing_2, screen_spacing_1 + 3 * screen_spacing_2, 300, 3 * screen_spacing_2))
 
     pygame.display.flip()
     clock.tick(60)

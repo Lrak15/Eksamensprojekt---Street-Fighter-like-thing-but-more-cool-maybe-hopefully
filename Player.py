@@ -13,6 +13,9 @@ class PlayerClass:
     futureX = 0
     futureY = 0
 
+    punch_height = 20
+    punch_width = 0
+
     def __init__(self, screen, x, y, width, height, vel):
         self.screen = screen
         self.xPos = x
@@ -45,3 +48,6 @@ class PlayerClass:
 
     def draw(self):
         pygame.draw.rect(self.screen, self.color, pygame.Rect(self.xPos, self.yPos, self.width, self.height))
+        pygame.draw.rect(self.screen, self.color, pygame.Rect(self.xPos, self.yPos, self.punch_width, self.punch_height))
+
+
