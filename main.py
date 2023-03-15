@@ -1,5 +1,7 @@
 import pygame
 
+import time
+
 pygame.init()
 
 gameWindowWidth, gameWindowHeight = pygame.display.Info().current_w, pygame.display.Info().current_h
@@ -61,6 +63,8 @@ while running:
                 fighter_two.moveY += fighter_two.vel
             if event.key == pygame.K_w:
                 fighter_two.moveY -= fighter_two.vel
+            if event.key == pygame.K_SPACE:
+                fighter_two.punch_width = 200
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_d:
@@ -71,6 +75,10 @@ while running:
                 fighter_two.moveY -= fighter_two.vel
             if event.key == pygame.K_w:
                 fighter_two.moveY += fighter_two.vel
+            if event.key == pygame.K_SPACE:
+                time.sleep(0.4)
+                fighter_two.punch_width = 00
+
 
     if collisionChecker(fighter_one, fighter_two):
         fighter_one.color = (255, 0, 0)
