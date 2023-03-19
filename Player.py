@@ -8,7 +8,7 @@ class PlayerClass:
     height = 0
     punch_height = 20
     punch_width = 0
-    color = (1, 1, 1)
+    color = (255, 1, 1)
     vel_y = 0
     jump = False
 
@@ -37,7 +37,7 @@ class PlayerClass:
         #vertival movement: Jump
         if not self.jump:
             if key[pygame.K_w]:
-                self.vel_y = -70
+                self.vel_y = -40
                 self.jump = True
         #ATTACCKKKK
         if key[pygame.K_c]:
@@ -56,8 +56,6 @@ class PlayerClass:
             self.jump = False
 
 
-
-
         #update player
         self.rect.x += move_x
         self.rect.y += move_y
@@ -71,5 +69,6 @@ class PlayerClass:
     def draw(self):
         pygame.draw.rect(self.screen, self.color, self.rect)
         pygame.draw.rect(self.screen, self.color, pygame.Rect(self.xPos, self.yPos+125, self.punch_width, self.punch_height))
-
+        pygame.draw.rect(self.screen, (1, 1, 1), pygame.Rect(self.rect.x-25, self.rect.top-10, 150, 20))
+        pygame.draw.rect(self.screen, (1, 1, 1), pygame.Rect(self.rect.centerx-35, self.rect.top-60, 70, 50))
 

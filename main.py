@@ -18,8 +18,8 @@ clock = pygame.time.Clock()
 FPS = 60
 
 #create two instances of the player class
-fighter_one = PlayerClass(screen, 101, 500, 103, 200)
-fighter_two = PlayerClass(screen, 101, 102, 103, 200)
+fighter_one = PlayerClass(screen, 101, 500, 100, 200)
+fighter_two = PlayerClass(screen, 1000, 700, 100, 200)
 
 #create instances of the hitbox class
 hitbox_fighterTwo_punch = HitClass(screen, 0, 0, 100, 20)
@@ -44,55 +44,6 @@ while running:
         elif event.type == pygame.QUIT:
             running = False
 
-
-
-        """
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT:
-                fighter_one.moveX += fighter_one.vel
-            if event.key == pygame.K_LEFT:
-                fighter_one.moveX -= fighter_one.vel
-            if event.key == pygame.K_DOWN:
-                fighter_one.duck()
-            if event.key == pygame.K_UP:
-                if fighter_one.yPos == gameWindowHeight - fighter_one.height:
-                    fighter_one.moveY = 20
-
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_RIGHT:
-                fighter_one.moveX -= fighter_one.vel
-            if event.key == pygame.K_LEFT:
-                fighter_one.moveX += fighter_one.vel
-            if event.key == pygame.K_DOWN:
-                fighter_one.height += fighter_one.height
-
-
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_d:
-                fighter_two.moveX += fighter_two.vel
-            if event.key == pygame.K_a:
-                fighter_two.moveX -= fighter_two.vel
-            if event.key == pygame.K_s:
-                fighter_two.moveY += fighter_two.vel
-            if event.key == pygame.K_w:
-                if fighter_two.yPos == gameWindowHeight - fighter_two.height:
-                    fighter_two.moveY = 20
-            if event.key == pygame.K_SPACE:
-                fighter_two.punch_width = 200
-
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_d:
-                fighter_two.moveX -= fighter_two.vel
-            if event.key == pygame.K_a:
-                fighter_two.moveX += fighter_two.vel
-            if event.key == pygame.K_s:
-                fighter_two.moveY -= fighter_two.vel
-            if event.key == pygame.K_w:
-                fighter_two.moveY += fighter_two.vel
-            if event.key == pygame.K_SPACE:
-                fighter_two.punch_width = 0
-            """
-
     """
     if collisionChecker(hitbox_fighterTwo_punch, fighter_one):
         fighter_one.color = (255, 0, 0)
@@ -102,6 +53,8 @@ while running:
 
     fighter_one.move()
     fighter_one.draw()
+
+    fighter_two.draw()
 
 
     """
