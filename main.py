@@ -1,10 +1,13 @@
 import pygame
 import time
 
+pygame.mixer.pre_init(44100, -16, 6, 2048)
+pygame.init()
+
 from Player import PlayerClass
 from Hitbox import HitClass
 
-pygame.init()
+
 
 #set up the drawing window
 gameWindowWidth, gameWindowHeight = pygame.display.Info().current_w, pygame.display.Info().current_h
@@ -17,9 +20,12 @@ print(gameWindowWidth, gameWindowHeight)
 clock = pygame.time.Clock()
 FPS = 60
 
+
+
+
 #create two instances of the player class
-fighter_one = PlayerClass(screen, 101, 500, 100, 200)
-fighter_two = PlayerClass(screen, 1000, 700, 100, 200)
+fighter_one = PlayerClass(1, screen, 101, 500, 100, 200)
+fighter_two = PlayerClass(2, screen, 1000, 700, 100, 200)
 
 #create instances of the hitbox class
 hitbox_fighterTwo_punch = HitClass(screen, 0, 0, 100, 20)

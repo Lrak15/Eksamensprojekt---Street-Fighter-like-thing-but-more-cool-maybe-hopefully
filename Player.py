@@ -1,5 +1,6 @@
 import pygame
-
+import os
+from pygame import mixer
 
 class PlayerClass:
     xPos = 0
@@ -11,13 +12,26 @@ class PlayerClass:
     color = (255, 1, 1)
     vel_y = 0
     jump = False
+    attack = False
 
-    def __init__(self, screen, x, y, width, height):
+
+
+
+    def __init__(self, player, screen, x, y, width, height):
+        self.Player = player
         self.screen = screen
         self.screenWidth = self.screen.get_size()[0]
         self.screenHeight = self.screen.get_size()[1]
         self.rect = pygame.Rect(x, y, width, height)
 
+        self.jump_sfx = pygame.mixer.Sound("assets/lyd/SFX/jump.mp3")
+        self.attack_sfx = pygame.mixer.Sound("assets/lyd/SFX/slå2.mp3")
+
+    def soundeffects(self, sfx_type):
+        if sfx_type == "jump":
+            self.jump_sfx.play()
+        elif sfx_type == "attack":
+            self.attack_sfx.play()
 
     def move(self):
         speed = 10
@@ -37,11 +51,17 @@ class PlayerClass:
         #vertival movement: Jump
         if not self.jump:
             if key[pygame.K_w]:
+                self.soundeffects("jump")
                 self.vel_y = -40
                 self.jump = True
+
+
         #ATTACCKKKK
+
         if key[pygame.K_c]:
+            self.soundeffects("attack")
             self.attack()
+
 
         self.vel_y += gravity
         move_y += self.vel_y
