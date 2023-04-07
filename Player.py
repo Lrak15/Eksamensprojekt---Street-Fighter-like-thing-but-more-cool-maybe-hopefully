@@ -76,14 +76,24 @@ class PlayerClass:
         key = pygame.key.get_pressed()
 
         if not self.punch and not self.kick:
-            if key[pygame.K_a]:
-                move_x = -speed
-                self.bw_running = True
-            elif key[pygame.K_d]:
-                move_x = speed
-                self.fw_running = True
+            if not self.flip:
+                if key[pygame.K_a]:
+                    move_x = -speed
+                    self.bw_running = True
+                elif key[pygame.K_d]:
+                    move_x = speed
+                    self.fw_running = True
+                else:
+                    move_x = 0
             else:
-                move_x = 0
+                if key[pygame.K_a]:
+                    move_x = -speed
+                    self.fw_running = True
+                elif key[pygame.K_d]:
+                    move_x = speed
+                    self.bw_running = True
+                else:
+                    move_x = 0
             #vertival movement: Jump
             if not self.jump:
                 if key[pygame.K_w]:

@@ -26,7 +26,7 @@ fighter_two_sheet = pygame.image.load("assets/Billeder/ANIMATIONER - ÅRSPRØVE.
 fighter_SIZE = 800
 
 fighter_one_SCALE = 0.25
-fighter_one_OFFSET = [72, 56]
+fighter_one_OFFSET = [gameWindowWidth / 9, 0]
 fighter_one_DATA = [fighter_SIZE, fighter_one_SCALE, fighter_one_OFFSET]
 fighter_two_SCALE = 3
 fighter_two_OFFSET = [112, 107]
