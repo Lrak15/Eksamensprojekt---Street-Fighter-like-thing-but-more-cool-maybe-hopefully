@@ -14,7 +14,7 @@ class PlayerClass:
     vel_y = 0
 
     def __init__(self, player, screen, x, y, width, height, flip, data, sprite_sheet, animation_steps):
-        self.Player = player
+        self.player = player
         self.screen = screen
         self.size = data[0]
         self.image_scale = data[1]
@@ -76,39 +76,85 @@ class PlayerClass:
         key = pygame.key.get_pressed()
 
         if not self.punch and not self.kick:
-            if not self.flip:
-                if key[pygame.K_a]:
-                    move_x = -speed
-                    self.bw_running = True
-                elif key[pygame.K_d]:
-                    move_x = speed
-                    self.fw_running = True
+            if self.player == 1:
+                if not self.flip:
+                    if key[pygame.K_a]:
+                        move_x = -speed
+                        self.bw_running = True
+                    elif key[pygame.K_d]:
+                        move_x = speed
+                        self.fw_running = True
+                    else:
+                        move_x = 0
                 else:
-                    move_x = 0
-            else:
-                if key[pygame.K_a]:
-                    move_x = -speed
-                    self.fw_running = True
-                elif key[pygame.K_d]:
-                    move_x = speed
-                    self.bw_running = True
+                    if key[pygame.K_a]:
+                        move_x = -speed
+                        self.fw_running = True
+                    elif key[pygame.K_d]:
+                        move_x = speed
+                        self.bw_running = True
+                    else:
+                        move_x = 0
+                #vertival movement: Jump
+                if not self.jump:
+                    if key[pygame.K_w]:
+                        self.soundeffects("jump")
+                        self.vel_y = -40
+                        self.jump = True
+                #ATTACCKKKK
+                if key[pygame.K_c]:
+                    #self.soundeffects("attack")
+                    self.punch = True
+                    #self.attack()
+                elif key[pygame.K_v]:
+                    #self.soundeffects("attack")
+                    self.kick = True
+                   # self.attack()
+
+                if target.rect.centerx > self.rect.centerx:
+                    self.flip = False
                 else:
-                    move_x = 0
-            #vertival movement: Jump
-            if not self.jump:
-                if key[pygame.K_w]:
-                    self.soundeffects("jump")
-                    self.vel_y = -40
-                    self.jump = True
-            #ATTACCKKKK
-            if key[pygame.K_c]:
-                #self.soundeffects("attack")
-                self.punch = True
-                #self.attack()
-            elif key[pygame.K_v]:
-                #self.soundeffects("attack")
-                self.kick = True
-               # self.attack()
+                    self.flip = True
+
+            if self.player == 2:
+                if not self.flip:
+                    if key[pygame.K_LEFT]:
+                        move_x = -speed
+                        self.bw_running = True
+                    elif key[pygame.K_RIGHT]:
+                        move_x = speed
+                        self.fw_running = True
+                    else:
+                        move_x = 0
+                else:
+                    if key[pygame.K_LEFT]:
+                        move_x = -speed
+                        self.fw_running = True
+                    elif key[pygame.K_RIGHT]:
+                        move_x = speed
+                        self.bw_running = True
+                    else:
+                        move_x = 0
+                #vertival movement: Jump
+                if not self.jump:
+                    if key[pygame.K_UP]:
+                        #self.soundeffects("jump")
+                        self.vel_y = -40
+                        self.jump = True
+                #ATTACCKKKK
+                if key[pygame.K_i]:
+                    #self.soundeffects("attack")
+                    self.punch = True
+                    #self.attack()
+                elif key[pygame.K_o]:
+                    #self.soundeffects("attack")
+                    self.kick = True
+                   # self.attack()
+
+                if target.rect.centerx < self.rect.centerx:
+                    self.flip = False
+                else:
+                    self.flip = True
 
 
 
@@ -124,10 +170,7 @@ class PlayerClass:
             move_y = self.screenHeight - self.rect.bottom
             self.jump = False
 
-        if target.rect.centerx > self.rect.centerx:
-            self.flip = False
-        else:
-            self.flip = True
+
 
         #update player
         self.rect.x += move_x

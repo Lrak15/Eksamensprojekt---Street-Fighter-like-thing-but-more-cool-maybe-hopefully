@@ -20,8 +20,8 @@ clock = pygame.time.Clock()
 FPS = 60
 
 #load fighter spritesheets
-fighter_one_sheet = pygame.image.load("assets/Billeder/ANIMATIONER - ÅRSPRØVE.png").convert_alpha()
-fighter_two_sheet = pygame.image.load("assets/Billeder/ANIMATIONER - ÅRSPRØVE.png").convert_alpha()
+fighter_one_sheet = pygame.image.load("assets/Billeder/Sprite Sheet - Karl.png").convert_alpha()
+fighter_two_sheet = pygame.image.load("assets/Billeder/Sprite Sheet - Phillip.png").convert_alpha()
 
 #define fighter variables
 fighter_SIZE = 800
@@ -29,8 +29,8 @@ fighter_SIZE = 800
 fighter_one_SCALE = 0.25
 fighter_one_OFFSET = [72, 56]
 fighter_one_DATA = [fighter_SIZE, fighter_one_SCALE, fighter_one_OFFSET]
-fighter_two_SCALE = 3
-fighter_two_OFFSET = [112, 107]
+fighter_two_SCALE = 0.25
+fighter_two_OFFSET = [72, 56]
 fighter_two_DATA = [fighter_SIZE, fighter_two_SCALE, fighter_two_OFFSET]
 
 #define number of steps in each animation
@@ -39,7 +39,7 @@ animation_steps = [3, 2, 2, 2, 3, 3, 3, 1]
 
 #create two instances of the player class
 fighter_one = PlayerClass(1, screen, 101, 500, 100, 200, False, fighter_one_DATA, fighter_one_sheet, animation_steps)
-fighter_two = PlayerClass(2, screen, 1000, 700, 100, 200, True, fighter_two_DATA, fighter_two_sheet, animation_steps)
+fighter_two = PlayerClass(2, screen, 1000, 700, 100, 200, False, fighter_two_DATA, fighter_two_sheet, animation_steps)
 
 #create instances of the hitbox class
 hitbox_fighterTwo_punch = HitClass(screen, 0, 0, 100, 20)
@@ -107,7 +107,10 @@ while running:
     """
 
     fighter_one.move(fighter_two)
+    fighter_two.move(fighter_one)
+
     fighter_one.update()
+    fighter_two.update()
 
     fighter_one.draw()
     fighter_two.draw()
