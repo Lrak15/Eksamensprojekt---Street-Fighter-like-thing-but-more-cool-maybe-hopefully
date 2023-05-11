@@ -76,13 +76,6 @@ while running:
         elif event.type == pygame.QUIT:
             running = False
 
-    """
-    if collisionChecker(hitbox_fighterTwo_punch, fighter_one):
-        fighter_one.color = (255, 0, 0)
-    else:
-        fighter_one.color = (1, 1, 1)
-    """
-
 
     fighter_one.move(fighter_two)
     fighter_two.move(fighter_two)
@@ -105,7 +98,7 @@ while running:
             if collisionChecker(hitbox_fighterOne_punch, fighter_two):
                 fighter_two.color = (1, 255, 1)
         else:
-            fighter_two_color = (255, 1, 1)
+            fighter_two.color = (255, 1, 1)
 
 
     """
