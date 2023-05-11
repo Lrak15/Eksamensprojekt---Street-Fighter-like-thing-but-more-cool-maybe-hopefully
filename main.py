@@ -114,7 +114,7 @@ while running:
     #hitbox_fighterTwo_punch.update(fighter_two.xPos+100, fighter_two.yPos + fighter_two.height/2)
     #hitbox_fighterTwo_punch.draw()
 
-    fighter_one_health_bar.draw_health_bars(screen, 100, 1920, (20, 20, 20), (30, 30, 30), (0, 0, 0), (255, 160, 12), 30, 25, 120, 45)
+    fighter_one_health_bar.draw_health_bars(screen, 255, gameWindowWidth, (100, 100, 100), (50, 50, 50), (0, 0, 0), (0, 255, 0), int(gameWindowWidth / 50), int(gameWindowWidth / 200), int(gameWindowWidth / 3), 45)
 
     pygame.event.pump()
     pygame.display.flip()
