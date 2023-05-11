@@ -95,8 +95,8 @@ while running:
 
     if fighter_one.attacking:
         if fighter_one.kick and fighter_one.frame_index == 2:
-            hitbox_fighterOne_punch.draw()
-            if collisionChecker(hitbox_fighterOne_punch, fighter_two):
+            hitbox_fighterOne_kick.draw()
+            if collisionChecker(hitbox_fighterOne_kick, fighter_two):
                 fighter_two.color = (1, 255, 1)
                 health_bars.player_two_health -= 1
                 if health_bars.player_two_health > 127.5:
