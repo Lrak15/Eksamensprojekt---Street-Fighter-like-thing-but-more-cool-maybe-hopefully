@@ -1,23 +1,22 @@
 import pygame
-import os
-from pygame import mixer
-
 
 class PlayerClass:
-    xPos = 0
-    yPos = 0
-    width = 0
-    height = 0
+
     punch_height = 20
     punch_width = 0
     color = (255, 1, 1)
     vel_y = 0
+    color_green = (1, 255, 1)
 
     def __init__(self, player, screen, x, y, width, height, flip, data, sprite_sheet, animation_steps):
-        self.Player = player
+        self.player = player
         self.screen = screen
+        self.xPos = x
+        self.yPos = y
+        self.width = width
+        self.height = height
         self.size = data[0]
-        self.image_scale = data[1]
+        self.scale = data[1]
         self.offset = data[2]
         self.flip = flip
         self.animation_list = self.load_images(sprite_sheet, animation_steps)
@@ -34,10 +33,12 @@ class PlayerClass:
         self.jump = False
         self.punch = False
         self.kick = False
+        self.ducking = False
+        self.attacking = False
 
         self.screenWidth = self.screen.get_size()[0]
         self.screenHeight = self.screen.get_size()[1]
-        self.rect = pygame.Rect(x, y, width, height)
+        self.rect = pygame.Rect(self.xPos, self.yPos, width, height)
 
         self.jump_sfx = pygame.mixer.Sound("assets/lyd/SFX/jump.mp3")
         self.attack_sfx = pygame.mixer.Sound("assets/lyd/SFX/slå2.mp3")
@@ -50,7 +51,7 @@ class PlayerClass:
             temp_img_list = []
             for x in range(animation):
                 temp_img = sprite_sheet.subsurface(x * self.size, y * self.size, self.size, self.size)
-                temp_img_list.append(pygame.transform.scale(temp_img, (self.size * self.image_scale, self.size * self.image_scale)))
+                temp_img_list.append(pygame.transform.scale(temp_img, (self.size * self.scale, self.size * self.scale)))
             animation_list.append(temp_img_list)
             y += 1
         return animation_list
@@ -64,6 +65,7 @@ class PlayerClass:
             self.attack_sfx.play()
 
     def move(self, target):
+        self.rect = pygame.Rect(self.xPos, self.yPos, self.width, self.height)
         speed = 10
         gravity = 3
         move_x = 0
@@ -76,39 +78,48 @@ class PlayerClass:
         key = pygame.key.get_pressed()
 
         if not self.punch and not self.kick:
-            if not self.flip:
+            if self.player == 1:
                 if key[pygame.K_a]:
+                    if not self.flip:
+                        self.bw_running = True
+                    else:
+                        self.fw_running = True
                     move_x = -speed
-                    self.bw_running = True
+
                 elif key[pygame.K_d]:
+                    if not self.flip:
+                        self.fw_running = True
+                    else:
+                        self.bw_running = True
                     move_x = speed
-                    self.fw_running = True
+
+                #duck
+                elif key[pygame.K_s]:
+                    self.ducking = True
+
+
+                #vertival movement: Jump
+                if not self.jump:
+                    if key[pygame.K_w]:
+                        self.soundeffects("jump")
+                        self.vel_y = -40
+                        self.jump = True
+                #ATTACCKKKK
+                if key[pygame.K_c]:
+                    #self.soundeffects("attack")
+                    self.punch = True
+                    self.attacking = True
+                    #self.attack()
+                elif key[pygame.K_v]:
+                    #self.soundeffects("attack")
+                    self.kick = True
+                    self.attacking = True
+                   # self.attack()
+
+                if target.rect.centerx > self.rect.centerx:
+                    self.flip = False
                 else:
-                    move_x = 0
-            else:
-                if key[pygame.K_a]:
-                    move_x = -speed
-                    self.fw_running = True
-                elif key[pygame.K_d]:
-                    move_x = speed
-                    self.bw_running = True
-                else:
-                    move_x = 0
-            #vertival movement: Jump
-            if not self.jump:
-                if key[pygame.K_w]:
-                    self.soundeffects("jump")
-                    self.vel_y = -40
-                    self.jump = True
-            #ATTACCKKKK
-            if key[pygame.K_c]:
-                #self.soundeffects("attack")
-                self.punch = True
-                #self.attack()
-            elif key[pygame.K_v]:
-                #self.soundeffects("attack")
-                self.kick = True
-               # self.attack()
+                    self.flip = True
 
 
 
@@ -124,30 +135,30 @@ class PlayerClass:
             move_y = self.screenHeight - self.rect.bottom
             self.jump = False
 
-        if target.rect.centerx > self.rect.centerx:
-            self.flip = False
-        else:
-            self.flip = True
+
 
         #update player
-        self.rect.x += move_x
-        self.rect.y += move_y
+        self.xPos += move_x
+        self.yPos += move_y
 
     def update(self):
         if self.jump:
-            self.update_action(7)
+            self.update_action(7) #jumping
         elif self.punch:
-            self.update_action(1)
+            self.update_action(1) #punching
         elif self.kick:
-            self.update_action(6)
+            self.update_action(6) #kicking
+        elif self.ducking:
+            self.update_action(3) #ducking
         elif self.fw_running:
-            self.update_action(4)
+            self.update_action(4) #running forwards
         elif self.bw_running:
-            self.update_action(5)
+            self.update_action(5) #running backwards
         else:
-            self.update_action(0)
+            self.update_action(0) #idle
 
-        animation_cooldown = 250
+
+        animation_cooldown = 100
         self.image = self.animation_list[self.action][self.frame_index]
         if pygame.time.get_ticks() - self.update_time > animation_cooldown:
             self.frame_index += 1
@@ -159,6 +170,8 @@ class PlayerClass:
                 self.punch = False
                 self.kick = False
 
+
+
     def update_action(self, new_action):
         # check if the new action is different to the previous one
         if new_action != self.action:
@@ -166,6 +179,17 @@ class PlayerClass:
             # update the animation settings
             self.frame_index = 0
             self.update_time = pygame.time.get_ticks()
+
+    def hitbox(self):
+        box_xPos = self.rect.x + 500 * self.scale
+        box_yPos = self.rect.y - 50 * self.scale
+        box_width = self.scale * 175
+        box_height = self.scale * 225
+        hitbox_kick_rect = pygame.Rect(box_xPos, box_yPos, box_width, box_height)
+        if self.kick:
+            if self.frame_index == 2:
+                pygame.draw.rect(self.screen, self.color_green, hitbox_kick_rect, 3, 1)
+
 
 
 
@@ -178,4 +202,4 @@ class PlayerClass:
         pygame.draw.rect(self.screen, self.color, self.rect)
         pygame.draw.rect(self.screen, self.color, pygame.Rect(self.xPos, self.yPos+125, self.punch_width, self.punch_height))
         img = pygame.transform.flip(self.image, self.flip, False)
-        self.screen.blit(img, (self.rect.x - (self.offset[0] * self.image_scale), self.rect.y - (self.offset[1] * self.image_scale)))
+        self.screen.blit(img, (self.rect.x - (self.offset[0] * self.scale), self.rect.y - (self.offset[1] * self.scale)))
