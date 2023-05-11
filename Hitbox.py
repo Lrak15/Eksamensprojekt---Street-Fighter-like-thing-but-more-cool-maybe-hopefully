@@ -4,10 +4,10 @@ class HitClass:
     newxPos = 0
     newyPos = 0
 
-    def __init__(self, screen, x, y, width, height):
+    def __init__(self, screen, width, height):
         self.screen = screen
-        self.xPos = x
-        self.yPos = y
+        self.xPos = 0
+        self.yPos = 0
         self.width = width
         self.height = height
         self.color = (1, 255, 1)

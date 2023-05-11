@@ -24,37 +24,36 @@ FPS = 60
 fighter_one_sheet = pygame.image.load("assets/Billeder/Sprite Sheet - Karl.png").convert_alpha()
 fighter_two_sheet = pygame.image.load("assets/Billeder/Sprite Sheet - Phillip.png").convert_alpha()
 
-#define fighter variables
+# define fighter variables
 fighter_SIZE = 800
 
-fighter_one_SCALE = 0.4
-fighter_one_OFFSET = [0, 200]
-fighter_one_DATA = [fighter_SIZE, fighter_one_SCALE, fighter_one_OFFSET]
-fighter_two_SCALE = 0.4
-fighter_two_OFFSET = [0, 200]
-fighter_two_DATA = [fighter_SIZE, fighter_two_SCALE, fighter_two_OFFSET]
+fighter_SCALE = 0.4
+fighter_OFFSET = [gameWindowWidth / 5, gameWindowHeight / 20]
+fighter_DATA = [fighter_SIZE, fighter_SCALE, fighter_OFFSET]
 
-#define number of steps in each animation
+# define number of steps in each animation
 animation_steps = [3, 2, 2, 2, 3, 3, 3, 1]
 
+fighter_one_startPos = [gameWindowWidth / 10, 500]
+fighter_two_startPos = [gameWindowWidth - (gameWindowWidth / 10 + gameWindowWidth / 20)]
 
-#create two instances of the player class
-fighter_one = PlayerClass(1, screen, 101, 500, 100, 200, False, fighter_one_DATA, fighter_one_sheet, animation_steps)
-fighter_two = PlayerClass(2, screen, 1000, 700, 100, 200, False, fighter_two_DATA, fighter_two_sheet, animation_steps)
+# create two instances of the player class
+fighter_one = PlayerClass(1, screen, fighter_one_startPos[0], fighter_one_startPos[1], gameWindowWidth / 20, gameWindowHeight / 3, False, fighter_DATA, fighter_one_sheet, animation_steps)
+fighter_two = PlayerClass(2, screen, fighter_two_startPos[0], 700, gameWindowWidth / 20, gameWindowHeight / 3, False, fighter_DATA, fighter_two_sheet, animation_steps)
 
 # create two instances of the health bar class
 fighter_one_health_bar = HealthBarClass(gameWindowWidth, screen, 1)
 fighter_two_health_bar = HealthBarClass(gameWindowWidth, screen, 1)
 
-#load background image
-bg_img = pygame.image.load("assets/Billeder/Holstebro.jpg")
+# load background image
+bg_img = pygame.transform.scale(pygame.image.load("assets/Billeder/street_fighter_background.png"), (gameWindowWidth, gameWindowHeight))
 
-hitbox_fighterOne_punch = HitClass(screen, fighter_one.xPos+200, fighter_one.yPos, 200, 200)
-#hitbox_fighterOne_kick =
+#hitbox_fighterOne_punch = HitClass(screen, gameWindowWidth / 25, gameWindowWidth / 25)
+hitbox_fighterOne_kick = HitClass(screen, gameWindowWidth / 23, gameWindowWidth / 23)
 
-#hitbox_fighterTwo_punch =
-#hitbox_fighterTwo_kick =
-hitboxes = [hitbox_fighterOne_punch]
+# hitbox_fighterTwo_punch = HitClass(screen, gameWindowWidth / 25, gameWindowWidth / 25)
+# hitbox_fighterTwo_kick = HitClass(screen, gameWindowWidth / 25, gameWindowWidth / 25)
+hitboxes = [hitbox_fighterOne_kick]
 
 def collisionChecker(firstGameObject, secondGameObject):
     if firstGameObject.xPos + firstGameObject.width > secondGameObject.xPos and firstGameObject.xPos < secondGameObject.xPos + secondGameObject.width and firstGameObject.yPos + firstGameObject.height > secondGameObject.yPos and firstGameObject.yPos < secondGameObject.yPos + secondGameObject.height:
@@ -90,19 +89,17 @@ while running:
 
 
 
-    hitbox_fighterOne_punch.update(fighter_one.xPos, fighter_one.yPos)
-    hitbox_fighterOne_punch.draw()
+    hitbox_fighterOne_kick.update(fighter_one.xPos + gameWindowWidth / 12, fighter_one.yPos)
 
-    """
+
     if fighter_one.attacking:
-        if fighter_one.kick and fighter_one.frame_index == 2:
-            hitbox_fighterOne_punch.draw()
-            if collisionChecker(hitbox_fighterOne_punch, fighter_two):
+        if fighter_one.kick and fighter_one.frame_index == 2 or fighter_one.punch and fighter_one.frame_index == 3:
+            hitbox_fighterOne_kick.draw()
+            if collisionChecker(hitbox_fighterOne_kick, fighter_two):
                 fighter_two.color = (1, 255, 1)
                 fighter_one_health_bar.health -= 1
         else:
             fighter_two.color = (255, 1, 1)
-    """
 
     """
     fighter_one.gravity()

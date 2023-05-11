@@ -131,8 +131,8 @@ class PlayerClass:
             move_x = self.screenWidth - self.rect.right
         if self.rect.left + move_x < 0:
             move_x = -self.rect.x
-        if self.rect.bottom + move_y > self.screenHeight:
-            move_y = self.screenHeight - self.rect.bottom
+        if self.rect.bottom + move_y > self.screenHeight - self.screenHeight / 20:
+            move_y = self.screenHeight - (self.rect.bottom + self.screenHeight / 20)
             self.jump = False
 
 
