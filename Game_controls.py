@@ -6,34 +6,38 @@ class HealthBarClass:
         self.window_width = gameWindowWidth
         self.display = screen
         # Define some health color things :)
-        self.health = 255
-        self.health1 = 255
-        self.health2 = 0
+        self.player_one_health = 255
+        self.player_one_health1 = 255
+        self.player_one_health2 = 0
+        self.player_two_health = 255
+        self.player_two_health1 = 255
+        self.player_two_health2 = 0
         # Define health bar colors
         self.background_color = (100, 100, 100)
         self.outline_color = (50, 50, 50)
         self.black_color = (0, 0, 0)
-        self.health_color = (self.health2, self.health1, 0)
+        self.player_one_health_color = (self.player_one_health2, self.player_one_health1, 0)
+        self.player_two_health_color = (self.player_two_health2, self.player_two_health1, 0)
         # Define screen spacings and lengths
         self.screen_spacing_1 = int(gameWindowWidth / 50)
         self.screen_spacing_2 = int(gameWindowWidth / 200)
         self.health_bar_length = int(gameWindowWidth / 3)
 
-    def draw_health_bars(self, display, health, window_width, background_color, outline_color, black_color,
-                         health_color, screen_spacing_1, screen_spacing_2, health_bar_length, xPos):
+    def draw_health_bars(self, display, player_one_health, player_two_health, window_width, background_color, outline_color, black_color,
+                         player_one_health_color, player_two_health_color, screen_spacing_1, screen_spacing_2, health_bar_length, xPos):
         # Draw player 1 health bar
         pygame.draw.rect(display, background_color, pygame.Rect(screen_spacing_1, screen_spacing_1, health_bar_length, 9 * screen_spacing_2))
         pygame.draw.rect(display, outline_color, pygame.Rect(screen_spacing_1, screen_spacing_1, health_bar_length, 9 * screen_spacing_2), screen_spacing_2)
         pygame.draw.rect(display, black_color, pygame.Rect(screen_spacing_1 + 2 * screen_spacing_2, screen_spacing_1 + 2 * screen_spacing_2, health_bar_length - 4 * screen_spacing_2, 5 * screen_spacing_2))
         pygame.draw.rect(display, outline_color, pygame.Rect(screen_spacing_1 + 2 * screen_spacing_2, screen_spacing_1 + 2 * screen_spacing_2, health_bar_length - 4 * screen_spacing_2, 5 * screen_spacing_2), screen_spacing_2)
-        pygame.draw.rect(display, health_color, pygame.Rect(screen_spacing_1 + 3 * screen_spacing_2, screen_spacing_1 + 3 * screen_spacing_2, (health_bar_length - 6 * screen_spacing_2) * (health / 255), 3 * screen_spacing_2))
+        pygame.draw.rect(display, player_one_health_color, pygame.Rect(screen_spacing_1 + 3 * screen_spacing_2, screen_spacing_1 + 3 * screen_spacing_2, (health_bar_length - 6 * screen_spacing_2) * (player_one_health / 255), 3 * screen_spacing_2)) ##lol
 
         # Draw player 2 health bar
         pygame.draw.rect(display, background_color, pygame.Rect(window_width - health_bar_length - screen_spacing_1, screen_spacing_1, health_bar_length, 9 * screen_spacing_2))
         pygame.draw.rect(display, outline_color, pygame.Rect(window_width - health_bar_length - screen_spacing_1, screen_spacing_1, health_bar_length, 9 * screen_spacing_2), screen_spacing_2)
         pygame.draw.rect(display, black_color, pygame.Rect(window_width - health_bar_length - screen_spacing_1 + 2 * screen_spacing_2, screen_spacing_1 + 2 * screen_spacing_2, health_bar_length - 4 * screen_spacing_2, 5 * screen_spacing_2))
         pygame.draw.rect(display, outline_color, pygame.Rect(window_width - health_bar_length - screen_spacing_1 + 2 * screen_spacing_2, screen_spacing_1 + 2 * screen_spacing_2, health_bar_length - 4 * screen_spacing_2, 5 * screen_spacing_2), screen_spacing_2)
-        pygame.draw.rect(display, health_color, pygame.Rect(window_width - health_bar_length - screen_spacing_1 + 3 * screen_spacing_2 - (health_bar_length - 6 * screen_spacing_2) * (health / 255 - 1), screen_spacing_1 + 3 * screen_spacing_2, (health_bar_length - 6 * screen_spacing_2) / (255 / health), 3 * screen_spacing_2))
+        pygame.draw.rect(display, player_two_health_color, pygame.Rect(window_width - health_bar_length - screen_spacing_1 + 3 * screen_spacing_2 - (health_bar_length - 6 * screen_spacing_2) * (player_two_health / 255 - 1), screen_spacing_1 + 3 * screen_spacing_2, (health_bar_length - 6 * screen_spacing_2) / (255 / player_two_health), 3 * screen_spacing_2))
 
 
 

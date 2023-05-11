@@ -7,6 +7,8 @@ from Game_controls import HealthBarClass
 pygame.mixer.pre_init(44100, -16, 6, 2048)
 pygame.init()
 
+pygame.mixer_music.load("assets/lyd/SFX/Streetfighter.mp3")
+pygame.mixer_music.play(loops=-1)
 
 
 #set up the drawing window
@@ -42,8 +44,7 @@ fighter_one = PlayerClass(1, screen, fighter_one_startPos[0], fighter_one_startP
 fighter_two = PlayerClass(2, screen, fighter_two_startPos[0], 700, gameWindowWidth / 20, gameWindowHeight / 3, False, fighter_DATA, fighter_two_sheet, animation_steps)
 
 # create two instances of the health bar class
-fighter_one_health_bar = HealthBarClass(gameWindowWidth, screen, 1)
-fighter_two_health_bar = HealthBarClass(gameWindowWidth, screen, 1)
+health_bars = HealthBarClass(gameWindowWidth, screen, 1)
 
 # load background image
 bg_img = pygame.transform.scale(pygame.image.load("assets/Billeder/street_fighter_background.png"), (gameWindowWidth, gameWindowHeight))
@@ -93,13 +94,18 @@ while running:
 
 
     if fighter_one.attacking:
-        if fighter_one.kick and fighter_one.frame_index == 2 or fighter_one.punch and fighter_one.frame_index == 3:
-            hitbox_fighterOne_kick.draw()
-            if collisionChecker(hitbox_fighterOne_kick, fighter_two):
+        if fighter_one.kick and fighter_one.frame_index == 2:
+            hitbox_fighterOne_punch.draw()
+            if collisionChecker(hitbox_fighterOne_punch, fighter_two):
                 fighter_two.color = (1, 255, 1)
-                fighter_one_health_bar.health -= 1
+                health_bars.player_two_health -= 1
+                if health_bars.player_two_health > 127.5:
+                    health_bars.player_two_health2 += 2
+                else:
+                    health_bars.player_two_health1 -= 2
         else:
             fighter_two.color = (255, 1, 1)
+
 
     """
     fighter_one.gravity()
@@ -114,7 +120,7 @@ while running:
     #hitbox_fighterTwo_punch.update(fighter_two.xPos+100, fighter_two.yPos + fighter_two.height/2)
     #hitbox_fighterTwo_punch.draw()
 
-    fighter_one_health_bar.draw_health_bars(screen, fighter_one_health_bar.health, gameWindowWidth, (100, 100, 100), (50, 50, 50), (0, 0, 0), (fighter_two_health_bar.health2, fighter_two_health_bar.health1, 0), int(gameWindowWidth / 50), int(gameWindowWidth / 200), int(gameWindowWidth / 3), 45)
+    health_bars.draw_health_bars(screen, health_bars.player_one_health, health_bars.player_two_health, gameWindowWidth, (100, 100, 100), (50, 50, 50), (0, 0, 0), (health_bars.player_one_health2, health_bars.player_one_health1, 0), (health_bars.player_two_health2, health_bars.player_two_health1, 0), int(gameWindowWidth / 50), int(gameWindowWidth / 200), int(gameWindowWidth / 3), 45)
 
     pygame.event.pump()
     pygame.display.flip()
