@@ -27,10 +27,10 @@ fighter_two_sheet = pygame.image.load("assets/Billeder/Sprite Sheet - Phillip.pn
 #define fighter variables
 fighter_SIZE = 800
 
-fighter_one_SCALE = 0.37
+fighter_one_SCALE = 0.4
 fighter_one_OFFSET = [0, 200]
 fighter_one_DATA = [fighter_SIZE, fighter_one_SCALE, fighter_one_OFFSET]
-fighter_two_SCALE = 0.37
+fighter_two_SCALE = 0.4
 fighter_two_OFFSET = [0, 200]
 fighter_two_DATA = [fighter_SIZE, fighter_two_SCALE, fighter_two_OFFSET]
 
@@ -91,15 +91,18 @@ while running:
 
 
     hitbox_fighterOne_punch.update(fighter_one.xPos, fighter_one.yPos)
+    hitbox_fighterOne_punch.draw()
 
+    """
     if fighter_one.attacking:
         if fighter_one.kick and fighter_one.frame_index == 2:
             hitbox_fighterOne_punch.draw()
             if collisionChecker(hitbox_fighterOne_punch, fighter_two):
                 fighter_two.color = (1, 255, 1)
+                fighter_one_health_bar.health -= 1
         else:
             fighter_two.color = (255, 1, 1)
-
+    """
 
     """
     fighter_one.gravity()
@@ -114,7 +117,7 @@ while running:
     #hitbox_fighterTwo_punch.update(fighter_two.xPos+100, fighter_two.yPos + fighter_two.height/2)
     #hitbox_fighterTwo_punch.draw()
 
-    fighter_one_health_bar.draw_health_bars(screen, 255, gameWindowWidth, (100, 100, 100), (50, 50, 50), (0, 0, 0), (0, 255, 0), int(gameWindowWidth / 50), int(gameWindowWidth / 200), int(gameWindowWidth / 3), 45)
+    fighter_one_health_bar.draw_health_bars(screen, fighter_one_health_bar.health, gameWindowWidth, (100, 100, 100), (50, 50, 50), (0, 0, 0), (fighter_two_health_bar.health2, fighter_two_health_bar.health1, 0), int(gameWindowWidth / 50), int(gameWindowWidth / 200), int(gameWindowWidth / 3), 45)
 
     pygame.event.pump()
     pygame.display.flip()
