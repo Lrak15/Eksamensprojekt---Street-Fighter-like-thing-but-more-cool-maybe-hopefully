@@ -29,7 +29,7 @@ fighter_two_sheet = pygame.image.load("assets/Billeder/Sprite Sheet - Phillip.pn
 # define fighter variables
 fighter_SIZE = 800
 
-fighter_SCALE = 0.4
+fighter_SCALE = gameWindowHeight / 2250
 fighter_OFFSET = [gameWindowWidth / 5, gameWindowHeight / 20]
 fighter_DATA = [fighter_SIZE, fighter_SCALE, fighter_OFFSET]
 
