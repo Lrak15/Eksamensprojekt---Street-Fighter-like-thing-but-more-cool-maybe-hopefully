@@ -56,8 +56,6 @@ class PlayerClass:
             y += 1
         return animation_list
 
-
-
     def soundeffects(self, sfx_type):
         if sfx_type == "jump":
             self.jump_sfx.play()
@@ -72,9 +70,9 @@ class PlayerClass:
         move_y = 0
         self.fw_running = False
         self.bw_running = False
+        self.ducking = False
 
-
-        #horizontal movement
+        # horizontal movement
         key = pygame.key.get_pressed()
 
         if not self.punch and not self.kick:
@@ -93,23 +91,23 @@ class PlayerClass:
                         self.bw_running = True
                     move_x = speed
 
-                #duck
+                # duck
                 elif key[pygame.K_s]:
                     self.ducking = True
 
-
-                #vertival movement: Jump
+                # vertical movement: Jump
                 if not self.jump:
                     if key[pygame.K_w]:
                         self.soundeffects("jump")
                         self.vel_y = -40
                         self.jump = True
-                #ATTACCKKKK
+
+                # ATTACCKKKK
                 if key[pygame.K_c]:
-                    #self.soundeffects("attack")
+                    # self.soundeffects("attack")
                     self.punch = True
                     self.attacking = True
-                    #self.attack()
+                    # self.attack()
                 elif key[pygame.K_v]:
                     #self.soundeffects("attack")
                     self.kick = True
@@ -117,6 +115,49 @@ class PlayerClass:
                    # self.attack()
 
                 if target.rect.centerx > self.rect.centerx:
+                    self.flip = False
+                else:
+                    self.flip = True
+
+        if not self.punch and not self.kick:
+            if self.player == 2:
+                if key[pygame.K_LEFT]:
+                    if not self.flip:
+                        self.bw_running = True
+                    else:
+                        self.fw_running = True
+                    move_x = -speed
+
+                elif key[pygame.K_RIGHT]:
+                    if not self.flip:
+                        self.fw_running = True
+                    else:
+                        self.bw_running = True
+                    move_x = speed
+
+                # duck
+                elif key[pygame.K_DOWN]:
+                    self.ducking = True
+
+                # vertival movement: Jump
+                if not self.jump:
+                    if key[pygame.K_UP]:
+                        self.soundeffects("jump")
+                        self.vel_y = -40
+                        self.jump = True
+                # ATTACCKKKK
+                if key[pygame.K_i]:
+                    # self.soundeffects("attack")
+                    self.punch = True
+                    self.attacking = True
+                    # self.attack()
+                elif key[pygame.K_o]:
+                    # self.soundeffects("attack")
+                    self.kick = True
+                    self.attacking = True
+                # self.attack()
+
+                if target.rect.centerx < self.rect.centerx:
                     self.flip = False
                 else:
                     self.flip = True
@@ -199,7 +240,7 @@ class PlayerClass:
         pygame.draw.rect(self.screen, attack_color, attack_rect)
 
     def draw(self):
-        pygame.draw.rect(self.screen, self.color, self.rect)
+        #pygame.draw.rect(self.screen, self.color, self.rect)
         pygame.draw.rect(self.screen, self.color, pygame.Rect(self.xPos, self.yPos+125, self.punch_width, self.punch_height))
         img = pygame.transform.flip(self.image, self.flip, False)
         self.screen.blit(img, (self.rect.x - (self.offset[0] * self.scale), self.rect.y - (self.offset[1] * self.scale)))
