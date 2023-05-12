@@ -132,16 +132,22 @@ while running:
         elif event.type == pygame.QUIT:
             running = False
 
+    # running functions for moving the fighters
     fighter_one.move(fighter_two)
     fighter_two.move(fighter_one)
 
+    # running functions for updating the fighters positions
     fighter_one.update()
     fighter_two.update()
 
+    # running functions for drawing the fighters
     fighter_one.draw()
     fighter_two.draw()
 
+    # handling the positions of the hitboxes
     hitboxHandler()
+
+    # applying damage
     damageHandler()
 
     health_bars.draw_health_bars(screen, health_bars.player_one_health, health_bars.player_two_health, gameWindowWidth, (100, 100, 100), (50, 50, 50), (0, 0, 0), (health_bars.player_one_health2, health_bars.player_one_health1, 0), (health_bars.player_two_health2, health_bars.player_two_health1, 0), int(gameWindowWidth / 50), int(gameWindowWidth / 200), int(gameWindowWidth / 3), 45)

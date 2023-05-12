@@ -35,6 +35,7 @@ class PlayerClass:
         self.kick = False
         self.ducking = False
         self.attacking = False
+        self.blocking = False
 
         self.screenWidth = self.screen.get_size()[0]
         self.screenHeight = self.screen.get_size()[1]
@@ -71,6 +72,7 @@ class PlayerClass:
         self.fw_running = False
         self.bw_running = False
         self.ducking = False
+        self.blocking = False
 
         # horizontal movement
         key = pygame.key.get_pressed()
@@ -113,6 +115,10 @@ class PlayerClass:
                     self.kick = True
                     self.attacking = True
                    # self.attack()
+
+                # BLOCK YOU DIMBUS
+                if key[pygame.K_b]:
+                    self.blocking = True
 
                 if target.rect.centerx > self.rect.centerx:
                     self.flip = False
@@ -157,6 +163,10 @@ class PlayerClass:
                     self.attacking = True
                 # self.attack()
 
+                # BLOCK YOU DIMBUS
+                if key[pygame.K_p]:
+                    self.blocking = True
+
                 if target.rect.centerx < self.rect.centerx:
                     self.flip = False
                 else:
@@ -167,7 +177,7 @@ class PlayerClass:
         self.vel_y += gravity
         move_y += self.vel_y
 
-        #keep the player on the screen
+        # keep the player on the screen
         if self.rect.right + move_x > self.screenWidth:
             move_x = self.screenWidth - self.rect.right
         if self.rect.left + move_x < 0:
@@ -176,28 +186,27 @@ class PlayerClass:
             move_y = self.screenHeight - (self.rect.bottom + self.screenHeight / 20)
             self.jump = False
 
-
-
-        #update player
+        # update player
         self.xPos += move_x
         self.yPos += move_y
 
     def update(self):
         if self.jump:
-            self.update_action(7) #jumping
+            self.update_action(7)  # jumping
         elif self.punch:
-            self.update_action(1) #punching
+            self.update_action(1)  # punching
         elif self.kick:
-            self.update_action(6) #kicking
+            self.update_action(6)  # kicking
         elif self.ducking:
-            self.update_action(3) #ducking
+            self.update_action(3)  # ducking
+        elif self.blocking:
+            self.update_action(2)  # blocking
         elif self.fw_running:
-            self.update_action(4) #running forwards
+            self.update_action(4)  # running forwards
         elif self.bw_running:
-            self.update_action(5) #running backwards
+            self.update_action(5)  # running backwards
         else:
-            self.update_action(0) #idle
-
+            self.update_action(0)  # idle
 
         animation_cooldown = 100
         self.image = self.animation_list[self.action][self.frame_index]
@@ -205,13 +214,14 @@ class PlayerClass:
             self.frame_index += 1
             self.update_time = pygame.time.get_ticks()
 
-        if self.frame_index >= len(self.animation_list[self.action]):
-            self.frame_index = 0
-            if self.action == 1 or self.action == 6:
-                self.punch = False
-                self.kick = False
-
-
+        if self.action == 2 or self.action == 3:
+            self.frame_index = len(self.animation_list[self.action]) - 1
+        else:
+            if self.frame_index >= len(self.animation_list[self.action]):
+                self.frame_index = 0
+                if self.action == 1 or self.action == 6:
+                    self.punch = False
+                    self.kick = False
 
     def update_action(self, new_action):
         # check if the new action is different to the previous one
@@ -221,23 +231,6 @@ class PlayerClass:
             self.frame_index = 0
             self.update_time = pygame.time.get_ticks()
 
-    def hitbox(self):
-        box_xPos = self.rect.x + 500 * self.scale
-        box_yPos = self.rect.y - 50 * self.scale
-        box_width = self.scale * 175
-        box_height = self.scale * 225
-        hitbox_kick_rect = pygame.Rect(box_xPos, box_yPos, box_width, box_height)
-        if self.kick:
-            if self.frame_index == 2:
-                pygame.draw.rect(self.screen, self.color_green, hitbox_kick_rect, 3, 1)
-
-
-
-
-    def attack(self):
-        attack_color = (0, 255, 0)
-        attack_rect = pygame.Rect(self.rect.right, self.rect.y, self.rect.width * 2, self.rect.height)
-        pygame.draw.rect(self.screen, attack_color, attack_rect)
 
     def draw(self):
         #pygame.draw.rect(self.screen, self.color, self.rect)
