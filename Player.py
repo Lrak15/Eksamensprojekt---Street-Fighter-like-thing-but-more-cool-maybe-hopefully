@@ -119,7 +119,7 @@ class PlayerClass:
                 # vertical movement: Jump
                 if not self.jump:
                     if key[pygame.K_w]:
-                        self.soundeffects("jump")
+                        self.soundeffects(self.jump)
                         self.vel_y = -40
                         self.jump = True
 
@@ -129,7 +129,7 @@ class PlayerClass:
                         self.punch = True
                         self.midAttack = True
                         self.updateAttackTime = pygame.time.get_ticks()
-                        self.soundeffects("slå2")
+                        self.soundeffects(self.punch)
 
                 # ATTACCKKKK; kick
                 if self.attack(self.p1KickCooldown):
