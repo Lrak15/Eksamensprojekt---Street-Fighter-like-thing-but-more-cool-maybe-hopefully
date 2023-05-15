@@ -5,3 +5,5 @@
 /modules.xml
 /inspectionProfiles/profiles_settings.xml
 /vcs.xml
+/__pycache__/
+__pycache__/
