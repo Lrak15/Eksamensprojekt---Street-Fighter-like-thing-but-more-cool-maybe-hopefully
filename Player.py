@@ -129,6 +129,7 @@ class PlayerClass:
                         self.punch = True
                         self.midAttack = True
                         self.updateAttackTime = pygame.time.get_ticks()
+                        self.soundeffects("slå2")
 
                 # ATTACCKKKK; kick
                 if self.attack(self.p1KickCooldown):
@@ -140,6 +141,7 @@ class PlayerClass:
                 # BLOCK YOU DIMBUS
                 if key[pygame.K_b]:
                     self.blocking = True
+                    self.soundeffects("Bloker")
 
                 # flipping fighter if they move to the other side of the other fighter
                 if target.rect.centerx > self.rect.centerx:
@@ -196,6 +198,7 @@ class PlayerClass:
                     self.flip = False
                 else:
                     self.flip = True
+
 
         # applying gravity to the fighters
         self.vel_y += gravity

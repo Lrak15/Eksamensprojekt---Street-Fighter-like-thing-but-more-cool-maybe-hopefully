@@ -61,7 +61,7 @@ hitbox_fighterOne = HitClass(screen, gameWindowWidth / 23, gameWindowWidth / 23)
 hitbox_fighterTwo_punch = HitClass(screen, gameWindowWidth / 23, gameWindowWidth / 23)
 hitbox_fighterTwo_kick = HitClass(screen, gameWindowWidth / 23, gameWindowWidth / 23)
 
-'''Defining collisionchecker with classes'''
+'''Defining collisionchecker'''
 def collision_checker(firstGameObject, secondGameObject):
     if firstGameObject.xPos + firstGameObject.width > secondGameObject.xPos and firstGameObject.xPos < secondGameObject.xPos + secondGameObject.width and firstGameObject.yPos + firstGameObject.height > secondGameObject.yPos and firstGameObject.yPos < secondGameObject.yPos + secondGameObject.height:
         return True
@@ -73,7 +73,7 @@ def hitbox_flipper(flip, hitbox_xPos, hitbox_offset):
         return(hitbox_xPos)
     return(new_hitbox_offset)
 
-'''Bruger classes til at checke om man tager damage '''
+'''Bruger funktioner til at checke om man tager damage '''
 def take_damage(attacker, hitbox, whoOuch):
     lenght = len(attacker.animationList[attacker.action])
     lastElement = lenght - 1
@@ -125,6 +125,7 @@ def hitbox_handler():
     hitbox_fighterTwo_kick_offset = hitbox_flipper(fighter_two.flip, -gameWindowWidth / 9.5, gameWindowWidth / 32)
     hitbox_fighterTwo_kick.update(fighter_two.rect.centerx + hitbox_fighterTwo_kick_offset, fighter_two.yPos + gameWindowHeight / 8)
 
+# Funktion der resetter "fighter" 1 og 2
 def damage_handler():
     take_damage(fighter_one, hitbox_fighterOne, fighter_two)
     take_damage(fighter_two, hitbox_fighterTwo_punch, fighter_one)
