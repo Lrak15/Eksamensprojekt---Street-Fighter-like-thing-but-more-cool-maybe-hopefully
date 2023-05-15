@@ -41,7 +41,7 @@ animation_steps = [3, 2, 2, 2, 3, 3, 3, 1]
 fighter_one_startPos = [gameWindowWidth / 10, 500]
 fighter_two_startPos = [gameWindowWidth - (gameWindowWidth / 10 + gameWindowWidth / 20)]
 
-# create two instances of the player class
+# create two instances of the player class (1= karl 2= Phillip)
 fighter_one = PlayerClass(1, screen, fighter_one_startPos[0], fighter_one_startPos[1], gameWindowWidth / 20, gameWindowHeight / 3, False, fighter_DATA, fighter_one_sheet, animation_steps)
 fighter_two = PlayerClass(2, screen, fighter_two_startPos[0], 700, gameWindowWidth / 20, gameWindowHeight / 3, False, fighter_DATA, fighter_two_sheet, animation_steps)
 
@@ -51,11 +51,13 @@ health_bars = HealthBarClass(gameWindowWidth, screen, 1)
 # load background image
 bg_img = pygame.transform.scale(pygame.image.load("assets/Billeder/street_fighter_background.png"), (gameWindowWidth, gameWindowHeight))
 
+# Definening the hitbox for punch and kick attack.
 hitbox_fighterOne = HitClass(screen, gameWindowWidth / 23, gameWindowWidth / 23)
 
 hitbox_fighterTwo_punch = HitClass(screen, gameWindowWidth / 23, gameWindowWidth / 23)
 hitbox_fighterTwo_kick = HitClass(screen, gameWindowWidth / 23, gameWindowWidth / 23)
 
+'''Defining collisionchecker with classes'''
 def collisionChecker(firstGameObject, secondGameObject):
     if firstGameObject.xPos + firstGameObject.width > secondGameObject.xPos and firstGameObject.xPos < secondGameObject.xPos + secondGameObject.width and firstGameObject.yPos + firstGameObject.height > secondGameObject.yPos and firstGameObject.yPos < secondGameObject.yPos + secondGameObject.height:
         return True
@@ -67,7 +69,7 @@ def hitboxFlipper(flip, hitbox_xPos, hitbox_offset):
         return(hitbox_xPos)
     return(new_hitbox_offset)
 
-
+'''Bruger classes til at checke om man tager damage '''
 def takeDamage(attacker, hitbox, whoOuch):
     lenght = len(attacker.animation_list[attacker.action])
     last_element = lenght - 1
