@@ -50,7 +50,7 @@ class PlayerClass:
         self.punched = False
         self.kicked = False
         self.midAttack = False
-        self.actionsList = [self.punch, self.kick, self.punched, self.kicked]
+        self.actionsList = [self.punch, self.kick, self.punched, self.kicked, self.blocking]
 
         self.screenWidth = self.screen.get_size()[0]
         self.screenHeight = self.screen.get_size()[1]
@@ -68,6 +68,7 @@ class PlayerClass:
                 temp_img = sprite_sheet.subsurface(x * self.size, y * self.size, self.size, self.size)
                 temp_img_list.append(pygame.transform.scale(temp_img, (self.size * self.scale, self.size * self.scale)))
             animationList.append(temp_img_list)
+        print(animationList)
         return animationList
     def soundeffects(self, sfx_type):
         if sfx_type == self.jump:
@@ -87,7 +88,6 @@ class PlayerClass:
 
         # horizontal movement
         key = pygame.key.get_pressed()
-
 
         if not key[pygame.K_b] and self.player == 1:
             self.blocking = False
