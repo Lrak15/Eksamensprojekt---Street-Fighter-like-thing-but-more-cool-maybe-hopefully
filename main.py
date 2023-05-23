@@ -3,13 +3,14 @@ import time
 from Player import PlayerClass
 from Hitbox import HitClass
 from Game_controls import HealthBarClass
+from Game_controls import SkillpointUpgradeClass
 
 pygame.mixer.pre_init(44100, -16, 6, 2048)
 pygame.mixer.init()
 pygame.init()
 
 pygame.mixer_music.load("assets/lyd/SFX/Streetfighter.mp3")
-pygame.mixer.music.set_volume(0.7)
+pygame.mixer.music.set_volume(50)
 pygame.mixer_music.play(loops=-1)
 
 
@@ -49,8 +50,11 @@ fighter_two_startPos = [gameWindowWidth - (gameWindowWidth / 10 + gameWindowWidt
 fighter_one = PlayerClass(1, screen, fighter_one_startPos[0], fighter_one_startPos[1], gameWindowWidth / 20, gameWindowHeight / 3, False, fighterOneDATA, fighter_one_sheet, animation_steps)
 fighter_two = PlayerClass(2, screen, fighter_two_startPos[0], 700, gameWindowWidth / 20, gameWindowHeight / 3, False, fighterTwoDATA, fighter_two_sheet, animation_steps)
 
-# create two instances of the health bar class
+# create an instances of the health bar class
 health_bars = HealthBarClass(gameWindowWidth, screen, 1)
+
+# create an instances of the skill point upgrade class
+skill_point_upgrade = SkillpointUpgradeClass(gameWindowWidth, screen)
 
 # load background image
 bg_img = pygame.transform.scale(pygame.image.load("assets/Billeder/street_fighter_background.png"), (gameWindowWidth, gameWindowHeight))
@@ -80,40 +84,24 @@ def take_damage(attacker, hitbox, whoOuch):
 
     if collision_checker(hitbox, whoOuch) and attacker.frameIndex == lastElement:
         if attacker.punch and attacker == fighter_one:
-            health_bars.player_two_health -= 2
             fighter_two.punched = True
             fighter_two.updateHurtTime = pygame.time.get_ticks()
-            if health_bars.player_two_health > 127.5:
-                health_bars.player_two_health2 += 2
-            else:
-                health_bars.player_two_health1 -= 2
+            health_bars.player_one_punched()
 
         elif attacker.punch and attacker == fighter_two:
-            health_bars.player_one_health -= 1
             fighter_one.punched = True
             fighter_one.updateHurtTime = pygame.time.get_ticks()
-            if health_bars.player_one_health > 127.5:
-                health_bars.player_one_health2 += 2
-            else:
-                health_bars.player_one_health1 -= 2
+            health_bars.player_two_punched()
 
         elif attacker.kick and attacker == fighter_one:
-            health_bars.player_two_health -= 2
             fighter_two.kicked = True
             fighter_two.updateHurtTime = pygame.time.get_ticks()
-            if health_bars.player_two_health > 127.5:
-                health_bars.player_two_health2 += 4
-            else:
-                health_bars.player_two_health1 -= 4
+            health_bars.player_one_kicked()
 
         elif attacker.kick and attacker == fighter_two:
-            health_bars.player_one_health -= 2
             fighter_one.kicked = True
             fighter_one.updateHurtTime = pygame.time.get_ticks()
-            if health_bars.player_one_health > 127.5:
-                health_bars.player_one_health2 += 4
-            else:
-                health_bars.player_one_health1 -= 4
+            health_bars.player_two_kicked()
 
 def hitbox_handler():
     hitbox_fighterOne_offset = hitbox_flipper(fighter_one.flip, gameWindowWidth / 18, gameWindowWidth / 32)
@@ -146,6 +134,8 @@ while running:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 running = False
+            elif event.key == pygame.K_SPACE:
+                skill_point_upgrade.still_upgrading = False
 
         elif event.type == pygame.QUIT:
             running = False
@@ -168,7 +158,11 @@ while running:
     # applying damage
     damage_handler()
 
+    # draw/update health bars
     health_bars.draw_health_bars(screen, health_bars.player_one_health, health_bars.player_two_health, gameWindowWidth, (100, 100, 100), (50, 50, 50), (0, 0, 0), (health_bars.player_one_health2, health_bars.player_one_health1, 0), (health_bars.player_two_health2, health_bars.player_two_health1, 0), int(gameWindowWidth / 50), int(gameWindowWidth / 200), int(gameWindowWidth / 3), 45)
+
+    # draw/update skill point upgrade screen
+    skill_point_upgrade.draw_skillpoint_upgrade(screen, skill_point_upgrade.player_1_health_upgrade, skill_point_upgrade.player_1_strength_upgrade, skill_point_upgrade.player_1_speed_upgrade, skill_point_upgrade.player_1_knockback_upgrade, skill_point_upgrade.player_1_stamina_upgrade, skill_point_upgrade.player_2_health_upgrade, skill_point_upgrade.player_2_strength_upgrade, skill_point_upgrade.player_2_speed_upgrade, skill_point_upgrade.player_2_knockback_upgrade, skill_point_upgrade.player_2_stamina_upgrade, gameWindowWidth, health_bars.background_color, health_bars.outline_color, health_bars.black_color, int(gameWindowWidth / 50), int(gameWindowWidth / 200))
 
     pygame.event.pump()
     pygame.display.flip()
