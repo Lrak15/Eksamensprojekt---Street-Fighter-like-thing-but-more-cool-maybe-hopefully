@@ -39,35 +39,61 @@ class HealthBarClass:
         pygame.draw.rect(display, outline_color, pygame.Rect(window_width - health_bar_length - screen_spacing_1 + 2 * screen_spacing_2, screen_spacing_1 + 2 * screen_spacing_2, health_bar_length - 4 * screen_spacing_2, 5 * screen_spacing_2), screen_spacing_2)
         pygame.draw.rect(display, player_two_health_color, pygame.Rect(window_width - health_bar_length - screen_spacing_1 + 3 * screen_spacing_2 - (health_bar_length - 6 * screen_spacing_2) * (player_two_health / 255 - 1), screen_spacing_1 + 3 * screen_spacing_2, (health_bar_length - 6 * screen_spacing_2) / (255 / player_two_health), 3 * screen_spacing_2))
 
-    def player_one_punched(self):
-        self.player_two_health -= 1
-        if self.player_two_health > 127.5:
-            self.player_two_health2 += 2
+    def player_one_punched(self, blocking):
+        divide_by = 0
+        if blocking:
+            self.player_one_health -= 0.5
+            divide_by = 2
         else:
-            self.player_two_health1 -= 2
+            self.player_one_health -= 1
+            divide_by = 1
 
-    def player_two_punched(self):
-        self.player_two_health -= 1
-        if self.player_two_health > 127.5:
-            self.player_two_health2 += 2
+        if self.player_one_health > 127.5:
+            self.player_one_health2 += 2 / divide_by
         else:
-            self.player_two_health1 -= 2
+            self.player_one_health1 -= 2 / divide_by
 
-    def player_one_kicked(self):
-        self.player_two_health -= 2
-        if self.player_two_health > 127.5:
-            self.player_two_health2 += 4
+    def player_two_punched(self, blocking):
+        divide_by = 0
+        if blocking:
+            self.player_two_health -= 0.5
+            divide_by = 2
         else:
-            self.player_two_health1 -= 4
+            self.player_two_health -= 1
+            divide_by = 1
 
-    def player_two_kicked(self):
-        self.player_two_health -= 2
         if self.player_two_health > 127.5:
-            self.player_two_health2 += 4
+            self.player_two_health2 += 2 / divide_by
         else:
-            self.player_two_health1 -= 4
+            self.player_two_health1 -= 2 / divide_by
 
+    def player_one_kicked(self, blocking):
+        divide_by = 0
+        if blocking:
+            self.player_one_health -= 1
+            divide_by = 2
+        else:
+            self.player_one_health -= 2
+            divide_by = 1
 
+        if self.player_one_health > 127.5:
+            self.player_one_health2 += 4 / divide_by
+        else:
+            self.player_one_health1 -= 4 / divide_by
+
+    def player_two_kicked(self, blocking):
+        divide_by = 0
+        if blocking:
+            self.player_two_health -= 1
+            divide_by = 2
+        else:
+            self.player_two_health -= 2
+            divide_by = 1
+
+        if self.player_two_health > 127.5:
+            self.player_two_health2 += 4 / divide_by
+        else:
+            self.player_two_health1 -= 4 / divide_by
 
 class SkillpointUpgradeClass:
     def __init__(self, gameWindowWidth, screen):
@@ -110,7 +136,7 @@ class SkillpointUpgradeClass:
                                 outline_color, black_color, screen_spacing_1, screen_spacing_2):
 
 
-        if
+        #if
 
         # Draw player 1 skillpoint upgrading screen
         pygame.draw.rect(display, background_color, pygame.Rect(5 * screen_spacing_1, 8 * screen_spacing_1, 11 * screen_spacing_1, 11 * screen_spacing_1))
