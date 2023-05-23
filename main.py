@@ -80,7 +80,7 @@ def take_damage(attacker, hitbox, whoOuch):
 
     if collision_checker(hitbox, whoOuch) and attacker.frameIndex == lastElement:
         if attacker.punch and attacker == fighter_one:
-            health_bars.player_two_health -= 1
+            health_bars.player_two_health -= 2
             fighter_two.punched = True
             fighter_two.updateHurtTime = pygame.time.get_ticks()
             if health_bars.player_two_health > 127.5:
