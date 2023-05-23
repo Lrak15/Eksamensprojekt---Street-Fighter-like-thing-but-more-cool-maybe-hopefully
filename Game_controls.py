@@ -39,12 +39,41 @@ class HealthBarClass:
         pygame.draw.rect(display, outline_color, pygame.Rect(window_width - health_bar_length - screen_spacing_1 + 2 * screen_spacing_2, screen_spacing_1 + 2 * screen_spacing_2, health_bar_length - 4 * screen_spacing_2, 5 * screen_spacing_2), screen_spacing_2)
         pygame.draw.rect(display, player_two_health_color, pygame.Rect(window_width - health_bar_length - screen_spacing_1 + 3 * screen_spacing_2 - (health_bar_length - 6 * screen_spacing_2) * (player_two_health / 255 - 1), screen_spacing_1 + 3 * screen_spacing_2, (health_bar_length - 6 * screen_spacing_2) / (255 / player_two_health), 3 * screen_spacing_2))
 
+    def player_one_punched(self):
+        self.player_two_health -= 1
+        if self.player_two_health > 127.5:
+            self.player_two_health2 += 2
+        else:
+            self.player_two_health1 -= 2
+
+    def player_two_punched(self):
+        self.player_two_health -= 1
+        if self.player_two_health > 127.5:
+            self.player_two_health2 += 2
+        else:
+            self.player_two_health1 -= 2
+
+    def player_one_kicked(self):
+        self.player_two_health -= 2
+        if self.player_two_health > 127.5:
+            self.player_two_health2 += 4
+        else:
+            self.player_two_health1 -= 4
+
+    def player_two_kicked(self):
+        self.player_two_health -= 2
+        if self.player_two_health > 127.5:
+            self.player_two_health2 += 4
+        else:
+            self.player_two_health1 -= 4
+
 
 
 class SkillpointUpgradeClass:
     def __init__(self, gameWindowWidth, screen):
         self.window_width = gameWindowWidth
         self.display = screen
+        self.still_upgrading = True
         # Define player 1 skillpoint upgrade degrees
         self.player_1_health_upgrade = 0
         self.player_1_strength_upgrade = 0
@@ -79,6 +108,9 @@ class SkillpointUpgradeClass:
                                 player_2_health_upgrade, player_2_strength_upgrade, player_2_speed_upgrade,
                                 player_2_knockback_upgrade, player_2_stamina_upgrade, window_width, background_color,
                                 outline_color, black_color, screen_spacing_1, screen_spacing_2):
+
+
+        if
 
         # Draw player 1 skillpoint upgrading screen
         pygame.draw.rect(display, background_color, pygame.Rect(5 * screen_spacing_1, 8 * screen_spacing_1, 11 * screen_spacing_1, 11 * screen_spacing_1))
