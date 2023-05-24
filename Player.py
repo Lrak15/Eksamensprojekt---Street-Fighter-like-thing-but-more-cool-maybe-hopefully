@@ -39,8 +39,6 @@ class PlayerClass:
         self.kick = False
         self.ducking = False
         self.blocking = False
-        self.fighterOneStunned = False
-        self.fighterTwoStunned = False
         self.hurt = False
         self.punched = False
         self.kicked = False
