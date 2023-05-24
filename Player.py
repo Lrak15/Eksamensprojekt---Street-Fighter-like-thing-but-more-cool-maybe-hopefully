@@ -51,6 +51,7 @@ class PlayerClass:
 
         self.jumpSfx = pygame.mixer.Sound("assets/lyd/SFX/jump.mp3")
         self.attackSfx = pygame.mixer.Sound("assets/lyd/SFX/slå2.mp3")
+        self.blockSfx = pygame.mixer.Sound("assets/lyd/SFX/Bloker.mp3")
 
     # Function for cutting out all the frames in the spritesheets. The second loop cycles through each frame in each
     # animation and put these individual frames into a list. The first loop takes the list from the second loop and
@@ -122,6 +123,7 @@ class PlayerClass:
                 # ATTACCKKKK; punch.
                 if self.attack(self.p1PunchCooldown):
                     if key[pygame.K_c]:
+                        self.attackSfx.play()
                         self.punch = True
                         self.midAttack = True
                         self.updateAttackTime = pygame.time.get_ticks()
@@ -129,12 +131,14 @@ class PlayerClass:
                 # ATTACCKKKK; kick.
                 if self.attack(self.p1KickCooldown):
                     if key[pygame.K_v]:
+                        self.attackSfx.play()
                         self.kick = True
                         self.midAttack = True
                         self.updateAttackTime = pygame.time.get_ticks()
 
                 # BLOCK YOU DIMBUS.
                 if key[pygame.K_b]:
+                    self.blockSfx.play()
                     self.blocking = True
 
                 # Flipping fighter if they move to the other side of the other fighter.
@@ -166,6 +170,7 @@ class PlayerClass:
                 # Vertical movement: Jump.
                 if not self.jump:
                     if key[pygame.K_UP]:
+                        self.jumpSfx.play()
                         self.velY = -40
                         self.jump = True
 
