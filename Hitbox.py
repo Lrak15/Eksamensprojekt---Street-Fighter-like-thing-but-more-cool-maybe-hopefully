@@ -1,9 +1,6 @@
 import pygame
 
 class HitClass:
-    newxPos = 0
-    newyPos = 0
-
 # Defining x og y positionen og farveeeee
     def __init__(self, screen, width, height):
         self.screen = screen
@@ -12,7 +9,6 @@ class HitClass:
         self.width = width
         self.height = height
         self.color = (1, 255, 1)
-
 
     def update(self, newxPos, newyPos):
         self.xPos = newxPos

@@ -92,21 +92,25 @@ def take_damage(attacker, hitbox, whoOuch):
             fighterTwo.punched = True
             fighterTwo.updateHurtTime = pygame.time.get_ticks()
             health_bars.player_two_punched(fighterTwo.blocking)
+            fighterTwo.hitSfx.play()
 
         elif attacker.punch and attacker == fighterTwo:
             fighterOne.punched = True
             fighterOne.updateHurtTime = pygame.time.get_ticks()
             health_bars.player_one_punched(fighterOne.blocking)
+            fighterOne.hit2Sfx.play()
 
         elif attacker.kick and attacker == fighterOne:
             fighterTwo.kicked = True
             fighterTwo.updateHurtTime = pygame.time.get_ticks()
             health_bars.player_two_kicked(fighterTwo.blocking)
+            fighterTwo.hitSfx.play()
 
         elif attacker.kick and attacker == fighterTwo:
             fighterOne.kicked = True
             fighterOne.updateHurtTime = pygame.time.get_ticks()
             health_bars.player_one_kicked(fighterOne.blocking)
+            fighterOne.hit2Sfx.play()
 
 
 # Collecting all the different functions being run in order to control the hixboxes into one.
@@ -173,7 +177,7 @@ while running:
     health_bars.draw_health_bars(screen, health_bars.player_one_health, health_bars.player_two_health, gameWindowWidth, (100, 100, 100), (50, 50, 50), (0, 0, 0), (health_bars.player_one_health2, health_bars.player_one_health1, 0), (health_bars.player_two_health2, health_bars.player_two_health1, 0), int(gameWindowWidth / 50), int(gameWindowWidth / 200), int(gameWindowWidth / 3), 45)
 
     # Draw/update skill point upgrade screen
-    skill_point_upgrade.draw_skillpoint_upgrade(screen, skill_point_upgrade.player_1_health_upgrade, skill_point_upgrade.player_1_strength_upgrade, skill_point_upgrade.player_1_speed_upgrade, skill_point_upgrade.player_1_knockback_upgrade, skill_point_upgrade.player_1_stamina_upgrade, skill_point_upgrade.player_2_health_upgrade, skill_point_upgrade.player_2_strength_upgrade, skill_point_upgrade.player_2_speed_upgrade, skill_point_upgrade.player_2_knockback_upgrade, skill_point_upgrade.player_2_stamina_upgrade, gameWindowWidth, health_bars.background_color, health_bars.outline_color, health_bars.black_color, int(gameWindowWidth / 50), int(gameWindowWidth / 200))
+    #skill_point_upgrade.draw_skillpoint_upgrade(screen, skill_point_upgrade.player_1_health_upgrade, skill_point_upgrade.player_1_strength_upgrade, skill_point_upgrade.player_1_speed_upgrade, skill_point_upgrade.player_1_knockback_upgrade, skill_point_upgrade.player_1_stamina_upgrade, skill_point_upgrade.player_2_health_upgrade, skill_point_upgrade.player_2_strength_upgrade, skill_point_upgrade.player_2_speed_upgrade, skill_point_upgrade.player_2_knockback_upgrade, skill_point_upgrade.player_2_stamina_upgrade, gameWindowWidth, health_bars.background_color, health_bars.outline_color, health_bars.black_color, int(gameWindowWidth / 50), int(gameWindowWidth / 200))
 
     # Pushes the drawings to the screen, so they can be shown.
     pygame.event.pump()
