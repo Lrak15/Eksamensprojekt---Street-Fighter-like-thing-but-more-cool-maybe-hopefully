@@ -94,23 +94,24 @@ def take_damage(attacker, hitbox, whoOuch):
             health_bars.player_two_punched(fighterTwo.blocking)
             fighterTwo.hitSfx.play()
 
-        elif attacker.punch and attacker == fighterTwo:
-            fighterOne.punched = True
-            fighterOne.updateHurtTime = pygame.time.get_ticks()
-            health_bars.player_one_punched(fighterOne.blocking)
-            fighterOne.hit2Sfx.play()
-
         elif attacker.kick and attacker == fighterOne:
             fighterTwo.kicked = True
             fighterTwo.updateHurtTime = pygame.time.get_ticks()
             health_bars.player_two_kicked(fighterTwo.blocking)
             fighterTwo.hitSfx.play()
 
-        elif attacker.kick and attacker == fighterTwo:
-            fighterOne.kicked = True
-            fighterOne.updateHurtTime = pygame.time.get_ticks()
-            health_bars.player_one_kicked(fighterOne.blocking)
-            fighterOne.hit2Sfx.play()
+        if hitbox == hitboxFighterTwoPunch:
+            if attacker.punch and attacker == fighterTwo:
+                fighterOne.punched = True
+                fighterOne.updateHurtTime = pygame.time.get_ticks()
+                health_bars.player_one_punched(fighterOne.blocking)
+                fighterOne.hit2Sfx.play()
+        elif hitbox == hitboxFighterTwoKick:
+            if attacker.kick and attacker == fighterTwo:
+                fighterOne.kicked = True
+                fighterOne.updateHurtTime = pygame.time.get_ticks()
+                health_bars.player_one_kicked(fighterOne.blocking)
+                fighterOne.hit2Sfx.play()
 
 
 # Collecting all the different functions being run in order to control the hixboxes into one.
@@ -125,6 +126,9 @@ def hitbox_handler():
     hitboxFighterTwoKickOffset = hitbox_flipper(fighterTwo.flip, -gameWindowWidth / 9.5, gameWindowWidth / 32)
     hitboxFighterTwoKick.update(fighterTwo.rect.centerx + hitboxFighterTwoKickOffset, fighterTwo.yPos + gameWindowHeight / 8)
 
+    #hitboxFighterOne.draw()
+    #hitboxFighterTwoKick.draw()
+    #hitboxFighterTwoPunch.draw()
 
 # Collective function that takes care of the different take_damage functions between the different fighters and
 # hitboxes. Also makes sure that the fighters hurt_resetter function have been started, so they won't be frozen forever.

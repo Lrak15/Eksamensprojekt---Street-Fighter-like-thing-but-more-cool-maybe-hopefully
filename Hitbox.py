@@ -14,5 +14,5 @@ class HitClass:
         self.xPos = newxPos
         self.yPos = newyPos
 
-    def draw(self, ):
+    def draw(self):
         pygame.draw.rect(self.screen, self.color, pygame.Rect(self.xPos, self.yPos, self.width, self.height), 3, 1)

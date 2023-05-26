@@ -25,12 +25,13 @@ class PlayerClass:
 
         self.punchStunTime = data[3][0]
         self.kickStunTime = data[3][1]
+        self.color = (1, 255, 1)
 
         self.p1PunchCooldown = 1000
         self.p2PunchCooldown = 1000
 
-        self.p1KickCooldown = 1500
-        self.p2KickCooldown = 1500
+        self.p1KickCooldown = 1250
+        self.p2KickCooldown = 1750
 
         self.fwRunning = False
         self.bwRunning = False

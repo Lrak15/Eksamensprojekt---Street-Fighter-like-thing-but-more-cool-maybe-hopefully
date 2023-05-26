@@ -40,22 +40,18 @@ class HealthBarClass:
         pygame.draw.rect(display, player_two_health_color, pygame.Rect(window_width - health_bar_length - screen_spacing_1 + 3 * screen_spacing_2 - (health_bar_length - 6 * screen_spacing_2) * (player_two_health / 255 - 1), screen_spacing_1 + 3 * screen_spacing_2, (health_bar_length - 6 * screen_spacing_2) / (255 / player_two_health), 3 * screen_spacing_2))
 
     def player_one_punched(self, blocking):
-
         if blocking:
-            self.player_two_health -= 1 / 2
-            if self.player_two_health > 127.5:
-                self.player_two_health2 += 2 / 2
+            self.player_one_health -= 1 / 2
+            if self.player_one_health > 127.5:
+                self.player_one_health2 += 2 / 2
             else:
-                self.player_two_health1 -= 2 / 2
+                self.player_one_health1 -= 2 / 2
         else:
-            self.player_two_health -= 1
-            if self.player_two_health > 127.5:
-                self.player_two_health2 += 2
+            self.player_one_health -= 1
+            if self.player_one_health > 127.5:
+                self.player_one_health2 += 2
             else:
-                self.player_two_health1 -= 2
-
-        self.player_two_health -= 1
-
+                self.player_one_health1 -= 2
 
     def player_two_punched(self, blocking):
         if blocking:
@@ -73,17 +69,17 @@ class HealthBarClass:
 
     def player_one_kicked(self, blocking):
         if blocking:
-            self.player_two_health -= 2 / 2
-            if self.player_two_health > 127.5:
-                self.player_two_health2 += 4 / 2
+            self.player_one_health -= 2 / 2
+            if self.player_one_health > 127.5:
+                self.player_one_health2 += 4 / 2
             else:
-                self.player_two_health1 -= 4 / 2
+                self.player_one_health1 -= 4 / 2
         else:
-            self.player_two_health -= 2
-            if self.player_two_health > 127.5:
-                self.player_two_health2 += 4
+            self.player_one_health -= 2
+            if self.player_one_health > 127.5:
+                self.player_one_health2 += 4
             else:
-                self.player_two_health1 -= 4
+                self.player_one_health1 -= 4
 
     def player_two_kicked(self, blocking):
         if blocking:
