@@ -44,6 +44,7 @@ class PlayerClass:
         self.punched = False
         self.kicked = False
         self.midAttack = False
+
         self.actionsList = [self.punch, self.kick, self.punched, self.kicked, self.blocking]
 
         self.screenWidth = self.screen.get_size()[0]
