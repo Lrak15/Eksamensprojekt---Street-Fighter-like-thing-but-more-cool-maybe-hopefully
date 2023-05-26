@@ -140,7 +140,7 @@ while running:
     clock.tick(FPS)
     screen.blit(bgImg, (0, 0))
 
-    # Listen for key events to QUIT the game.
+    # Listen for key events to QUIT the game and close upgrading screen.
     for event in pygame.event.get():
         # QUIT GAME
         if event.type == pygame.KEYDOWN:
